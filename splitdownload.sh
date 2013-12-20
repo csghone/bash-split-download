@@ -20,7 +20,7 @@ echo "FILE SIZE: $filesize"
 
 numoftrunk=$(echo "scale = 0; $filesize / $TRUNKSIZE" | bc)
 
-echo "NUMBER OF THREADS: $numoftrunk"
+printf "NUMBER OF THREADS: %s" $numoftrunk
 
 headbit=0
 tailbit=$(expr $TRUNKSIZE - 1)
