@@ -12,8 +12,13 @@ TRUNKSIZE=$(echo 100*1024*1024 | bc)
 
 url=$1
 
-filesize=$(curl -sI $url | awk '/Content-Length/ { print $2 }' | tr -d $'\r')
-filename=$(curl -sI $url | awk -F= '/filename/ { print $2 }' | tr -d $'\r')
+filesize=$(curl -sI $url | gawk '/Content-Length/ { print $2 }' | tr -d $'\r')
+filename=$(curl -sI $url | gawk -F= '/filename/ { print $2 }' | tr -d $'\r')
+
+if [ -z $filename ]; then
+	filename=$(echo $url | sed "s/.*\/\(.*\?\..*\?\)$/\1/")
+	echo $filename
+fi
 
 printf "FILE NAME: %s" $filename
 echo "FILE SIZE: $filesize"
