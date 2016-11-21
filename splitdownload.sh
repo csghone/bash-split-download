@@ -20,7 +20,7 @@ if [ -z $filename ]; then
 	echo $filename
 fi
 
-printf "FILE NAME: %s" $filename
+echo "FILE NAME: $filename"
 echo "FILE SIZE: $filesize"
 
 numoftrunk=$(echo "scale = 0; $filesize / $TRUNKSIZE" | bc)
@@ -31,7 +31,8 @@ headbit=0
 tailbit=$(expr $TRUNKSIZE - 1)
 for i in `seq 1 $numoftrunk`
 do
-	curl -s --range $headbit-$tailbit -o $filename.part$i $url &
+	file_append=`printf "%04d" $i`
+	curl -s --range $headbit-$tailbit -o $filename.part$file_append $url &
 	if [ "$tailbit" != "" ]; then
 		headbit=$(expr $tailbit + 1)
 	fi
