@@ -33,6 +33,7 @@ for i in `seq 1 $numoftrunk`
 do
 	file_append=`printf "%04d" $i`
 	curl -s --range $headbit-$tailbit -o $filename.part$file_append $url &
+	# wget $url --start-pos=$headbit -O - | head -c $TRUNKSIZE > $filename.part$file_append
 	if [ "$tailbit" != "" ]; then
 		headbit=$(expr $tailbit + 1)
 	fi
